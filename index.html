@@ -4,13 +4,46 @@
 <meta charset="UTF-8">
 <title>批量搜索</title>
 <script>
-function openallweb() 
-  {
+	function openallweb() 
+	{
     var j = 0;
 	var timeout = document.getElementById("myInputtime").value;
 	var text = document.getElementById("myInput").value;
 	//需要同时签到的所有网站
-	var urlAll = ["https://www.52pojie.cn","https://www.filmaker.cn","https://www.cgmodel.com/users/index.html","https://tieba.baidu.com","https://bbs.binmt.cc/k_misign-sign.html"
+	var urlAll = ["https://www.52pojie.cn","https://www.filmaker.cn","https://www.cgmodel.com/users/index.html","https://tieba.baidu.com","https://bbs.binmt.cc/k_misign-sign.html","https://www.zhatv.cn"
+	];
+
+	function openTimer(nextIndex) {
+		//便利完成则退出循环,并关闭当前页,并取消关闭提示
+		if(nextIndex >= urlAll.length) {
+			window.opener = null;
+			//window.open("about:blank", "_self");
+			//window.close();
+			return;
+		};
+		var urls = new Array();
+		for(i = 0; i < urlAll.length; i++) {
+			urls[i] = urlAll[i];
+			urls[i] = urls[i].replace(/%s/g, text);//替换%s
+		}
+
+		//间隔时间（毫秒，1秒=1000毫秒）可以自行设置
+		var winObj = window.open(urls[j], '_blank');
+		setTimeout(function() {
+			openTimer(++j);
+			
+		}, timeout);
+	}
+	openTimer(0);
+  }
+
+  function openPersonalwebpage() 
+  {
+    var j = 0;
+	var timeout = document.getElementById("myInputtime").value;
+	var text = document.getElementById("myInput").value;
+	//打开个人网站
+	var urlAll = ["https://www.xzyoutube.com","https://www.vrmmodel.com","https://www.jybsf.com","https://www.weedcn.com","https://www.iyingmei.com","https://www.zwyss.com","https:/www.gameguardian.cn","https:/www.worldmap.top"
 	];
 
 	function openTimer(nextIndex) {
@@ -181,7 +214,7 @@ function openallweb()
 
 
 
-<button onclick="openallweb()">一键打开签到</button>
+<button onclick="openallweb()">一键签到</button>&nbsp<button onclick="openPersonalwebpage()">个人网站</button>
 <p>
 	网页打开间隔时间毫秒
 	<input type="text" value="3" id="myInputtime">
@@ -193,5 +226,4 @@ function openallweb()
 	<button onclick="openWebAI()">AI</button>
 </body>
 </html>
-
 
